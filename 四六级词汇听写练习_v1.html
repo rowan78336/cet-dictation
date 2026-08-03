@@ -1246,6 +1246,13 @@ const TTS_FIXES={
 };
 function ttsText(w){
   let t=TTS_FIXES[w]||w;
+  t=t
+    .replace(/\(.*?\)/g,'')          // 去掉括号内容
+    .replace(/=.*$/,'')              // 保留等号前拼写
+    .replace(/\bsth\./gi,'something')// sth. -> something
+    .replace(/\bsb\./gi,'somebody')  // sb. -> somebody
+    .replace(/,(\S)/g,', $1')        // 逗号后补空格
+    .replace(/\./g,'');              // 清理剩余句点
   return t.replace(/\ba\b/gi,m=>m==='A'?'A':'uh');
 }
 
